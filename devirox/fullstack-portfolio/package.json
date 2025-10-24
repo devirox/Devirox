@@ -1,0 +1,34 @@
+{
+  "name": "fullstack-portfolio",
+  "version": "1.0.0",
+  "description": "A full-stack web developer portfolio showcasing projects and skills.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest"
+  },
+  "keywords": [
+    "portfolio",
+    "fullstack",
+    "web development"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^13.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "prisma": "^3.0.0",
+    "nodemailer": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "jest": "^27.0.0",
+    "ts-jest": "^27.0.0",
+    "@types/jest": "^27.0.0",
+    "@types/react": "^18.0.0",
+    "@types/node": "^18.0.0"
+  }
+}
