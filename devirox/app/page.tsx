@@ -5,16 +5,39 @@ import dynamic from "next/dynamic"
 import React from "react"
 import AboutMe from "../components/landing/AboutMe"
 import TestimonialsCarousel from "../components/landing/TestimonialsCarousel"
+import FeatureSteps from "../components/landing/FeatureSteps"
+import LogoCloudAnimated from "../components/landing/LogoCloudAnimated"
+import CTA3 from "../components/landing/CTA3"
+import DesignerPricing from "../components/landing/DesignerPricing"
+import TeamCarousel from "../components/landing/TeamCarousel"
+import ContactUs2 from "../fullstack-portfolio/src/pages/contact"
+import FooterComplex from "../fullstack-portfolio/src/components/FooterComplex"
 
-const HeroProduct = dynamic(() => import("../components/landing/HeroProduct"), { ssr: false })
+const HeroGrid = dynamic(() => import("../components/landing/HeroGrid"), { ssr: false })
 
 export default function Page() {
   return (
     <div className="w-full sm:w-5xl xl:w-7xl m-auto">
-      <HeroProduct />
+  <HeroGrid />
 
       <main className="px-6 py-12">
         <AboutMe />
+
+        <section id="features" className="my-20">
+          <FeatureSteps />
+        </section>
+
+        <section id="tech" className="my-20">
+          <LogoCloudAnimated />
+        </section>
+
+        <section id="pricing" className="my-20">
+          <DesignerPricing />
+        </section>
+
+        <section id="team" className="my-20">
+          <TeamCarousel />
+        </section>
 
         <section id="projects" className="my-20">
           <h2 className="text-2xl font-semibold mb-6">Projects</h2>
@@ -31,11 +54,15 @@ export default function Page() {
           <TestimonialsCarousel />
         </section>
 
+        <section id="cta" className="my-20">
+          <CTA3 />
+        </section>
+
         <section id="contact" className="my-20">
-          <h2 className="text-2xl font-semibold mb-4">Contact</h2>
-          <p className="text-slate-400">Contact form or links to your email / socials.</p>
+          <ContactUs2 />
         </section>
       </main>
+      <FooterComplex />
     </div>
   )
 }

@@ -9,7 +9,7 @@ import { Button } from "../ui/button"
 import { AnimatedGroup } from "./AnimatedGroup"
 import { AnimatedText } from "./AnimatedText"
 
-import { HeroHeader } from "./HeroHeader"
+import HeroHeader from "./HeroHeader"
 
 interface HeroProductProps {
   badgeText?: string

@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useInView } from 'framer-motion'
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { NumberTicker } from '@/components/ui/counter'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
@@ -37,6 +37,13 @@ const StatItem = ({
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
   const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  // Avoid rendering theme-dependent classes during SSR to prevent
+  // hydration mismatches. Only apply theme-specific classes after mount.
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <motion.div
@@ -46,7 +53,11 @@ const StatItem = ({
       transition={{ duration: 0.6, delay: delay, ease: 'easeOut' }}
       className={cn(
         'group border-border/30 bg-card relative overflow-hidden rounded-xl border p-6',
-        resolvedTheme === 'dark' ? 'shadow-xl shadow-black/5' : 'shadow-lg shadow-black/[0.03]',
+        // Only apply theme-dependent shadow after client mount to keep
+        // server and client markup consistent during hydration.
+        mounted && resolvedTheme === 'dark'
+          ? 'shadow-xl shadow-black/5'
+          : 'shadow-lg shadow-black/[0.03]'
       )}
     >
       <div

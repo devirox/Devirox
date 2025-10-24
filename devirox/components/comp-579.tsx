@@ -1,7 +1,3 @@
-"use client"
-
-import React from "react"
-
 import Logo from "@/components/navbar-components/logo"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,17 +6,21 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
-// Navigation links array tailored for a portfolio
+// Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "#", label: "Home", active: true },
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
+  { href: "#", label: "Features" },
+  { href: "#", label: "Pricing" },
+  { href: "#", label: "About" },
 ]
 
-export default function HeroHeader() {
+export default function Component() {
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 justify-between gap-4">
@@ -63,7 +63,11 @@ export default function HeroHeader() {
                   <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                     {navigationLinks.map((link, index) => (
                       <NavigationMenuItem key={index} className="w-full">
-                        <NavigationMenuLink href={link.href} className="py-1.5" active={link.active}>
+                        <NavigationMenuLink
+                          href={link.href}
+                          className="py-1.5"
+                          active={link.active}
+                        >
                           {link.label}
                         </NavigationMenuLink>
                       </NavigationMenuItem>
@@ -86,7 +90,7 @@ export default function HeroHeader() {
                     <NavigationMenuLink
                       active={link.active}
                       href={link.href}
-                      className="h-full justify-center rounded-none border-y-2 border-transparent border-b-primary py-1.5 font-medium text-muted-foreground hover:border-b-primary hover:bg-transparent hover:text-primary"
+                      className="h-full justify-center rounded-none border-y-2 border-transparent border-b-primary py-1.5 font-medium text-muted-foreground hover:border-b-primary hover:bg-transparent hover:text-primary data-[active]:border-b-primary data-[active]:bg-transparent!"
                     >
                       {link.label}
                     </NavigationMenuLink>
@@ -99,10 +103,10 @@ export default function HeroHeader() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#contact">Sign In</a>
+            <a href="#">Sign In</a>
           </Button>
           <Button asChild size="sm" className="text-sm">
-            <a href="#contact">Hire Me</a>
+            <a href="#">Get Started</a>
           </Button>
         </div>
       </div>
