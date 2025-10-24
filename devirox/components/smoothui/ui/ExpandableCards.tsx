@@ -126,10 +126,12 @@ export default function ExpandableCards({
     <div className={`flex w-full flex-col gap-4 overflow-scroll p-4 ${className}`}>
       <div
         ref={scrollRef}
-        className="scrollbar-hide mx-auto flex overflow-x-auto pt-4 pb-8"
+        className="hide-scrollbar mx-auto flex overflow-x-auto pt-4 pb-8"
         style={{
           scrollSnapType: "x mandatory",
           scrollPaddingLeft: "20%",
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
         }}
       >
         {cards.map((card) => (

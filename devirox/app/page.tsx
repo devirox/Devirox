@@ -4,6 +4,7 @@
 import dynamic from "next/dynamic"
 import React from "react"
 import AboutMe from "../components/landing/AboutMe"
+import TestimonialsCarousel from "../components/landing/TestimonialsCarousel"
 
 const HeroProduct = dynamic(() => import("../components/landing/HeroProduct"), { ssr: false })
 
@@ -23,6 +24,11 @@ export default function Page() {
           <React.Suspense>
             {React.createElement(React.lazy(() => import("../components/smoothui/ExpandableCardsDemo")))}
           </React.Suspense>
+        </section>
+
+        <section id="testimonials" className="my-20">
+          <h2 className="text-2xl font-semibold mb-6">Testimonials</h2>
+          <TestimonialsCarousel />
         </section>
 
         <section id="contact" className="my-20">
