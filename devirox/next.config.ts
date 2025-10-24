@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+   reactStrictMode: true,
   images: {
     // Allow Cloudinary and Unsplash hosts used by remote images. Prefer
     // `remotePatterns` (more secure) but keep `domains` for compatibility.
