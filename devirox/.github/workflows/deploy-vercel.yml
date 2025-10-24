@@ -1,0 +1,35 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Enable corepack and install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Install dependencies (devirox)
+        run: pnpm install --prefix devirox --frozen-lockfile
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          # Deploy the `devirox` subfolder to Vercel non-interactively.
+          # Make sure to add a repository secret named VERCEL_TOKEN with a
+          # token created from https://vercel.com/account/tokens
+          npx vercel --cwd devirox --prod --confirm --token "$VERCEL_TOKEN"
