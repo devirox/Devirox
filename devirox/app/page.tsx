@@ -17,7 +17,7 @@ const HeroGrid = dynamic(() => import("../components/landing/HeroGrid"), { ssr: 
 
 export default function Page() {
   return (
-    <div className="w-full sm:w-5xl xl:w-7xl m-auto">
+    <div className="w-full sm:w-5xl xl:w-7xl m-auto pt-24">
   <HeroGrid />
 
       <main className="px-6 py-12">

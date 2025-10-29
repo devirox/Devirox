@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This repository hosts the Devirox portfolio built with the Next.js App Router and Tailwind CSS. It now includes a lightweight
+custom authentication system inspired by the Web Dev Simplified "Custom Next.js Authentication" example.
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> **Note:** The Tailwind CSS v4 preview that powers the design system is distributed via the JSR registry. Make sure you have a
+> JSR token configured locally if `pnpm install` prompts for authentication.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Configure environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy the provided template and customise the values as needed:
 
-## Learn More
+```bash
+cp .env.example .env
+```
 
-To learn more about Next.js, take a look at the following resources:
+- `DATABASE_URL` points to the SQLite file that Prisma will manage.
+- `AUTH_SECRET` should be a long, random string used to sign session tokens. You can generate one with `openssl rand -hex 32`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Prepare the database
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Generate the Prisma client and push the schema to your SQLite database:
 
-## Deploy on Vercel
+```bash
+pnpm prisma generate
+pnpm prisma db push
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Run the development server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to explore the public portfolio. Authenticated users can access the
+`/dashboard` route to view private portfolio management tools.
+
+## Authentication overview
+
+- Users can register and sign in with email and password credentials.
+- Passwords are hashed with `bcryptjs` and stored in a Prisma-managed SQLite database.
+- Signed JSON Web Tokens (JWTs) issued with `jose` are stored as secure HTTP-only cookies for session management.
+- Middleware protects `/dashboard` while redirecting signed-in users away from the `/login` and `/register` routes.
+
+## Useful scripts
+
+- `pnpm dev` – start the Next.js development server.
+- `pnpm build` – create an optimized production build.
+- `pnpm start` – run the production server.
+- `pnpm lint` – lint the project.
