@@ -29,7 +29,7 @@ interface FooterComplexProps {
 }
 
 export default function FooterComplex({
-  companyName = "Your Name",
+  companyName = "Peter_Dev",
   description = "I craft modern, responsive, and engaging web experiences. Let’s bring your ideas to life with clean code and polished design.",
   newsletter = {
     title: "Stay in the Loop",
