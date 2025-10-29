@@ -9,8 +9,8 @@ custom authentication system inspired by the Web Dev Simplified "Custom Next.js 
 pnpm install
 ```
 
-> **Note:** The Tailwind CSS v4 preview that powers the design system is distributed via the JSR registry. Make sure you have a
-> JSR token configured locally if `pnpm install` prompts for authentication.
+> **Note:** The project pins Tailwind CSS v4 preview packages. If your environment enforces a custom registry, add an `.npmrc`
+> entry pointing `@jsr` scoped packages to `https://registry.npmjs.org/` so the install can complete.
 
 ### 2. Configure environment variables
 
@@ -20,19 +20,9 @@ Copy the provided template and customise the values as needed:
 cp .env.example .env
 ```
 
-- `DATABASE_URL` points to the SQLite file that Prisma will manage.
 - `AUTH_SECRET` should be a long, random string used to sign session tokens. You can generate one with `openssl rand -hex 32`.
 
-### 3. Prepare the database
-
-Generate the Prisma client and push the schema to your SQLite database:
-
-```bash
-pnpm prisma generate
-pnpm prisma db push
-```
-
-### 4. Run the development server
+### 3. Run the development server
 
 ```bash
 pnpm dev
@@ -44,8 +34,8 @@ Open [http://localhost:3000](http://localhost:3000) to explore the public portfo
 ## Authentication overview
 
 - Users can register and sign in with email and password credentials.
-- Passwords are hashed with `bcryptjs` and stored in a Prisma-managed SQLite database.
-- Signed JSON Web Tokens (JWTs) issued with `jose` are stored as secure HTTP-only cookies for session management.
+- Credentials are hashed with Node.js `scrypt` and stored in a JSON file at `data/users.json` for an easy-to-review demo setup.
+- Session cookies contain HMAC-signed payloads to verify authenticity without external dependencies.
 - Middleware protects `/dashboard` while redirecting signed-in users away from the `/login` and `/register` routes.
 
 ## Useful scripts

@@ -1,17 +1,9 @@
-import { prisma } from "./prisma";
 import { getSession } from "./auth";
+import { findUserById } from "./user-store";
 
 export async function getCurrentUser() {
   const session = await getSession();
   if (!session) return null;
 
-  return prisma.user.findUnique({
-    where: { id: session.userId },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      createdAt: true,
-    },
-  });
+  return findUserById(session.userId);
 }

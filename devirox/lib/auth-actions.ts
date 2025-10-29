@@ -1,74 +1,98 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { z } from "zod";
-import { prisma } from "./prisma";
-import { compare, hash } from "bcryptjs";
 import { createSession, deleteSession } from "./auth";
+import {
+  createUser,
+  findUserByEmail,
+  verifyPassword,
+} from "./user-store";
 
-const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Enter a valid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
+function getString(value: FormDataEntryValue | null) {
+  return typeof value === "string" ? value.trim() : "";
+}
 
-const loginSchema = z.object({
-  email: z.string().email("Enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
-});
+function validateName(name: string) {
+  if (name.length < 2) {
+    return "Name must be at least 2 characters";
+  }
+  return null;
+}
+
+function validateEmail(email: string) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return "Enter a valid email address";
+  }
+  return null;
+}
+
+function validatePassword(password: string) {
+  if (password.length < 8) {
+    return "Password must be at least 8 characters";
+  }
+  return null;
+}
 
 export type AuthFormState =
   | { status: "idle" }
   | { status: "error"; message: string }
   | { status: "success"; message: string };
 
-export async function registerAction(_: AuthFormState, formData: FormData): Promise<AuthFormState> {
-  const submission = registerSchema.safeParse({
-    name: formData.get("name"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
+export async function registerAction(
+  _: AuthFormState,
+  formData: FormData,
+): Promise<AuthFormState> {
+  const name = getString(formData.get("name"));
+  const email = getString(formData.get("email")).toLowerCase();
+  const password = getString(formData.get("password"));
 
-  if (!submission.success) {
-    const message = submission.error.errors[0]?.message ?? "Invalid form submission";
-    return { status: "error", message };
+  const nameError = validateName(name);
+  if (nameError) {
+    return { status: "error", message: nameError };
   }
 
-  const existingUser = await prisma.user.findUnique({ where: { email: submission.data.email } });
+  const emailError = validateEmail(email);
+  if (emailError) {
+    return { status: "error", message: emailError };
+  }
+
+  const passwordError = validatePassword(password);
+  if (passwordError) {
+    return { status: "error", message: passwordError };
+  }
+
+  const existingUser = await findUserByEmail(email);
   if (existingUser) {
     return { status: "error", message: "An account with that email already exists" };
   }
 
-  const passwordHash = await hash(submission.data.password, 10);
-  const user = await prisma.user.create({
-    data: {
-      email: submission.data.email,
-      name: submission.data.name,
-      passwordHash,
-    },
-  });
-
+  const user = await createUser({ name, email, password });
   await createSession(user.id);
   return redirect("/dashboard");
 }
 
-export async function loginAction(_: AuthFormState, formData: FormData): Promise<AuthFormState> {
-  const submission = loginSchema.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
+export async function loginAction(
+  _: AuthFormState,
+  formData: FormData,
+): Promise<AuthFormState> {
+  const email = getString(formData.get("email")).toLowerCase();
+  const password = getString(formData.get("password"));
 
-  if (!submission.success) {
-    const message = submission.error.errors[0]?.message ?? "Invalid form submission";
-    return { status: "error", message };
+  if (!email || !password) {
+    return { status: "error", message: "Email and password are required" };
   }
 
-  const user = await prisma.user.findUnique({ where: { email: submission.data.email } });
+  const emailError = validateEmail(email);
+  if (emailError) {
+    return { status: "error", message: emailError };
+  }
+
+  const user = await findUserByEmail(email);
   if (!user) {
     return { status: "error", message: "Invalid email or password" };
   }
 
-  const validPassword = await compare(submission.data.password, user.passwordHash);
+  const validPassword = await verifyPassword(password, user);
   if (!validPassword) {
     return { status: "error", message: "Invalid email or password" };
   }
@@ -76,7 +100,11 @@ export async function loginAction(_: AuthFormState, formData: FormData): Promise
   await createSession(user.id);
 
   const redirectTo = formData.get("redirectTo");
-  if (typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//")) {
+  if (
+    typeof redirectTo === "string" &&
+    redirectTo.startsWith("/") &&
+    !redirectTo.startsWith("//")
+  ) {
     return redirect(redirectTo);
   }
 
