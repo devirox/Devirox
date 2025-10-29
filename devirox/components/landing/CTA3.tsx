@@ -1,14 +1,16 @@
-import { ArrowRight } from "lucide-react"
+import { PORTFOLIO_OWNER } from "@/lib/profile"
 
 export default function CTA3() {
+  const testimonialQuote = `Working with ${PORTFOLIO_OWNER.name} was incredible — our product launched faster, looked better, and performed beyond expectations.`
+
   return (
     <section className="relative px-4 py-24 md:px-6">
       <div className="mx-auto max-w-7xl">
-        <div className="relative overflow-hidden rounded-2xl border border-[#1A3C6C]/30 80 shadow-2xl transition-all duration-500 hover:border-[#2E9BFF]/30 hover:shadow-[0_0_30px_rgba(88,192,255,0.2)]">
+        <div className="relative overflow-hidden rounded-2xl border border-[#1A3C6C]/30 shadow-2xl transition-all duration-500 hover:border-[#2E9BFF]/30 hover:shadow-[0_0_30px_rgba(88,192,255,0.2)]">
           <div className="relative z-10 grid gap-0 lg:grid-cols-2">
             {/* LEFT SIDE */}
             <div className="p-8 md:p-12 lg:p-16">
-              <div className="mb-6 inline-block rounded-full border border-[#1A3C6C]/30  px-4 py-3">
+              <div className="mb-6 inline-block rounded-full border border-[#1A3C6C]/30 px-4 py-3">
                 LET’S BUILD SOMETHING GREAT
               </div>
 
@@ -28,7 +30,7 @@ export default function CTA3() {
 
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <div className="mt-1 mr-4 rounded-full bg-[#0A0F2C] p-2 ">
+                  <div className="mt-1 mr-4 rounded-full bg-[#0A0F2C] p-2">
                     <svg
                       width="20"
                       height="20"
@@ -154,7 +156,9 @@ export default function CTA3() {
                 </div>
 
                 <div className="mt-10 rounded-xl bg-white/10 p-6 backdrop-blur">
-                  <p className="text-lg font-medium">&quot;Working with [Your Name] was incredible — our product launched faster, looked better, and performed beyond expectations.&quot;</p>
+                  <p className="text-lg font-medium">
+                    &quot;{testimonialQuote}&quot;
+                  </p>
                   <p className="mt-3 font-medium text-white/70">— Alex Rivera, Product Lead at NovaLabs</p>
                 </div>
               </div>

@@ -2,13 +2,15 @@
 
 import React, { useEffect, useRef } from "react"
 import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
 import { Quote } from "lucide-react"
 import Image from "next/image"
 
+import { PORTFOLIO_OWNER } from "@/lib/profile"
+import { cn } from "@/lib/utils"
+
 const portfolioTestimonials = [
   {
-    text: 'Working with [Your Name] was a game-changer. My website was fully functional and beautifully designed in record time.',
+    text: `Working with ${PORTFOLIO_OWNER.name} was a game-changer. My website was fully functional and beautifully designed in record time.`,
     imageSrc: 'https://i.pravatar.cc/96?img=12',
     name: 'Alex Johnson',
     username: '@alexjohnson',

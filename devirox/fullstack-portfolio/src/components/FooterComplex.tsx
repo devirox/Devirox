@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import React from "react"
 
+import { PORTFOLIO_OWNER } from "../config/profile"
+
 interface FooterComplexProps {
   companyName?: string
   description?: string
@@ -29,7 +31,7 @@ interface FooterComplexProps {
 }
 
 export default function FooterComplex({
-  companyName = "Your Name",
+  companyName = PORTFOLIO_OWNER.companyName,
   description = "I craft modern, responsive, and engaging web experiences. Let’s bring your ideas to life with clean code and polished design.",
   newsletter = {
     title: "Stay in the Loop",
@@ -66,7 +68,7 @@ export default function FooterComplex({
     dribbble: "https://dribbble.com/yourhandle",
     youtube: "https://youtube.com/@yourhandle",
   },
-  copyright = "© 2025 Your Name. All rights reserved.",
+  copyright = PORTFOLIO_OWNER.copyright(new Date().getFullYear()),
 }: FooterComplexProps) {
   return (
     <footer className="border-t border-border bg-background">

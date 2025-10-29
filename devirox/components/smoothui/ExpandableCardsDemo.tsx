@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+
+import { PORTFOLIO_OWNER } from "@/lib/profile"
 import ExpandableCards, { type Card } from "./ui/ExpandableCards"
 
 const ExpandableCardsDemo = () => {
@@ -14,7 +16,7 @@ const ExpandableCardsDemo = () => {
       content:
         "A responsive personal portfolio built with Next.js, TypeScript, and TailwindCSS. Showcases my skills, projects, and experience.",
       author: {
-        name: "Your Name",
+        name: PORTFOLIO_OWNER.name,
         role: "Full-Stack Developer",
         image: "/avatars/your-avatar.png",
       },
@@ -26,7 +28,7 @@ const ExpandableCardsDemo = () => {
       content:
         "Full-stack e-commerce application with AWS backend, Stripe integration, and real-time order management.",
       author: {
-        name: "Your Name",
+        name: PORTFOLIO_OWNER.name,
         role: "Full-Stack Developer",
         image: "/avatars/your-avatar.png",
       },
@@ -38,7 +40,7 @@ const ExpandableCardsDemo = () => {
       content:
         "Task management web app with real-time collaboration using WebSockets and a MongoDB backend.",
       author: {
-        name: "Your Name",
+        name: PORTFOLIO_OWNER.name,
         role: "Full-Stack Developer",
         image: "/avatars/your-avatar.png",
       },
@@ -50,7 +52,7 @@ const ExpandableCardsDemo = () => {
       content:
         "Custom blog platform built with Next.js, supporting markdown posts, dynamic routing, and SEO optimization.",
       author: {
-        name: "Your Name",
+        name: PORTFOLIO_OWNER.name,
         role: "Full-Stack Developer",
         image: "/avatars/your-avatar.png",
       },

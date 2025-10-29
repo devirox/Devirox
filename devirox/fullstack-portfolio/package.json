@@ -14,7 +14,7 @@
     "fullstack",
     "web development"
   ],
-  "author": "Your Name",
+  "author": "Peter",
   "license": "MIT",
   "dependencies": {
     "next": "^13.0.0",
